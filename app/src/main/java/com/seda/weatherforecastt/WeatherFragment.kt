@@ -3,6 +3,8 @@ package com.seda.weatherforecastt
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.app.ProgressDialog.show
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -30,6 +32,8 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.seda.weatherforecastt.adapter.DayAdapter
 import com.seda.weatherforecastt.adapter.WeatherAdapter
+import com.seda.weatherforecastt.bottomsheet.BottomSheetFragment
+import com.seda.weatherforecastt.databinding.BottomsheetBinding
 import com.seda.weatherforecastt.databinding.FragmentWeatherBinding
 import com.seda.weatherforecastt.mvvm.WeatherViewModel
 import com.seda.weatherforecastt.utils.Constants
@@ -40,6 +44,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class WeatherFragment : Fragment() {
     private lateinit var _binding: FragmentWeatherBinding
     private val binding get() = _binding
+
+    private lateinit var bin:BottomsheetBinding
 
     private val viewModel: WeatherViewModel by viewModels()
     private  lateinit var todoAdapter : DayAdapter
@@ -59,6 +65,8 @@ private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
         // Inflate the layout for this fragment
         _binding = FragmentWeatherBinding.inflate(layoutInflater,container,false)
         return binding.root
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -113,6 +121,7 @@ onclicklistener()
                         Toast.makeText(requireActivity(),"Get Success",Toast.LENGTH_SHORT).show()
 
                         viewModel.weatherresponse(location.latitude,location.longitude,"metric","6b7b8221d88f1514185d51d50283ac45")
+
                         viewModel.forecastresponse(location.latitude,location.longitude,"6b7b8221d88f1514185d51d50283ac45")
                     }
                   }
@@ -135,21 +144,29 @@ private fun showdialog(){
     var dialog = BottomSheetDialog(requireActivity(),R.style.bottomSheetDialogTheme)
 
 val bottomSheetDialog = LayoutInflater.from(requireActivity()).inflate(R.layout.bottomsheet,null)
-val view =bottomSheetDialog.findViewById<View>(R.id.button)
-    view.setOnClickListener {
-        dialog.dismiss()
-    }
+
+
+
+
+    bin = BottomsheetBinding.inflate(layoutInflater)
+
+
     dialog.setContentView(bottomSheetDialog)
     dialog.setCancelable(false)
 
     dialog.show()
 }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun onclicklistener(){
+
         weatherAdapter.onLongClickListener= {data->
             Toast.makeText(requireActivity(),"${data.main!!.temp}",Toast.LENGTH_SHORT).show()
+            var bottomSheetFragment=BottomSheetFragment.newInstance(data!!.main!!.temp.toInt().toString().substring(0,2) + " °C",
+                data.weather!![0].icon.toString(),data.main!!.humidity.toString() + " %",data.wind!!.speed.toString() + " km/hr",data.weather!![0].main.toString())
+               bottomSheetFragment.show(childFragmentManager, TAG)
 
-showdialog()
+
         }
 
     }

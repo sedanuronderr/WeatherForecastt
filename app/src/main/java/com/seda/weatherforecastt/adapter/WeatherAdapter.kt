@@ -43,14 +43,14 @@ class WeatherAdapter @Inject constructor(private val hourlyList: ArrayList<Forec
     }
 
 
-    @SuppressLint("ResourceType")
+    @SuppressLint("ResourceType", "SetTextI18n")
     override fun onBindViewHolder(holder: WeatherView, position: Int) {
         val todo = hourlyList[position]
 
 
-          holder.binding.inis.text = todo.main!!.tempMin.toString()
-           holder.binding.dereceWeather.text = todo.main!!.temp.toString()
-        holder.binding.inn.text= todo.main!!.tempMax.toString()
+          holder.binding.inis.text = todo.main!!.tempMin.toInt().toString().substring(0,2) + " °C"
+           holder.binding.dereceWeather.text = todo.main!!.temp.toInt().toString().substring(0,2) + " °C"
+        holder.binding.inn.text= todo.main!!.tempMax.toInt().toString().substring(0,2) + " °C"
 
 
 
@@ -62,9 +62,7 @@ class WeatherAdapter @Inject constructor(private val hourlyList: ArrayList<Forec
            .load("https://openweathermap.org/img/wn/" + todo.weather!![0].icon+ "@2x.png")
            .into(holder.binding.imagee)
     Log.e("resimm","${todo.weather!![0].icon}" )
-        val bottomSheetDialog = LayoutInflater.from(holder.itemView.context).inflate(R.layout.bottomsheet,null)
-        val view =bottomSheetDialog.findViewById<View>(R.id.button)
-        view.setBackgroundColor(Color.parseColor(colors[position%5]))
+
 
      holder.itemView.setOnClickListener{
          onLongClickListener.let { it->
