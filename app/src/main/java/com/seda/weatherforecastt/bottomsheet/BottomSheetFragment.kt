@@ -70,7 +70,6 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         binding.textView2.text = param5
         binding.textView3.text =param3
         binding.textView4.text= param4
-
        Log.e("param","${param1}")
     }
 
