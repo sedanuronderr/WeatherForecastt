@@ -18,7 +18,9 @@ Projede MVVM ,Dagger-Hilt , LiveData,Navigation Component, Coroutines,Retrofit,V
     </td>
     
 </tr>
+
  ![weather](https://user-images.githubusercontent.com/56538177/208503482-4bd9e095-0643-4501-9218-8cf0a2902407.gif)
+   
   </table>
   
 
