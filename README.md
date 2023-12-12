@@ -1,5 +1,5 @@
 # WeatherForecastt
-Projede MVVM ,Dagger-Hilt , LiveData,Navigation Component, Coroutines,Retrofit,ViewBindingve Animation kütüphaneleri kullanıldı.
+Projede MVVM ,Dagger-Hilt , LiveData,Navigation Component, Coroutines,Retrofit,ViewBindingve Animation Jetpack libraries were used in the project.
 
 <table>
 
